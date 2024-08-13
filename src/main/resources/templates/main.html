@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>300347715 - Final Exam - Seat Reservation</title>
+    <link rel="stylesheet" href="/webjars/bootstrap/5.1.3/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: green;
+        }
+        .black-background {
+            background-color: black;
+            color: white;
+        }
+        table, th, td {
+            color: white;
+        }
+        .yellow-text {
+            color: yellow;
+        }
+    </style>
+</head>
+<body>
+<div class="container mt-5">
+    <h2 class="yellow-text text-center">Seat Reservation System</h2>
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>A</th>
+            <th>B</th>
+            <th>C</th>
+            <th>D</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td th:text="${#maps.containsKey(seatMap, '1A') ? seatMap['1A'] : '1A'}">1A</td>
+            <td th:text="${#maps.containsKey(seatMap, '1B') ? seatMap['1B'] : '1B'}">1B</td>
+            <td th:text="${#maps.containsKey(seatMap, '1C') ? seatMap['1C'] : '1C'}">1C</td>
+            <td th:text="${#maps.containsKey(seatMap, '1D') ? seatMap['1D'] : '1D'}">1D</td>
+        </tr>
+        <tr>
+            <td th:text="${#maps.containsKey(seatMap, '2A') ? seatMap['2A'] : '2A'}">2A</td>
+            <td th:text="${#maps.containsKey(seatMap, '2B') ? seatMap['2B'] : '2B'}">2B</td>
+            <td th:text="${#maps.containsKey(seatMap, '2C') ? seatMap['2C'] : '2C'}">2C</td>
+            <td th:text="${#maps.containsKey(seatMap, '2D') ? seatMap['2D'] : '2D'}">2D</td>
+        </tr>
+        <tr>
+            <td th:text="${#maps.containsKey(seatMap, '3A') ? seatMap['3A'] : '3A'}">3A</td>
+            <td th:text="${#maps.containsKey(seatMap, '3B') ? seatMap['3B'] : '3B'}">3B</td>
+            <td th:text="${#maps.containsKey(seatMap, '3C') ? seatMap['3C'] : '3C'}">3C</td>
+            <td th:text="${#maps.containsKey(seatMap, '3D') ? seatMap['3D'] : '3D'}">3D</td>
+        </tr>
+        <tr>
+            <td th:text="${#maps.containsKey(seatMap, '4A') ? seatMap['4A'] : '4A'}">4A</td>
+            <td th:text="${#maps.containsKey(seatMap, '4B') ? seatMap['4B'] : '4B'}">4B</td>
+            <td th:text="${#maps.containsKey(seatMap, '4C') ? seatMap['4C'] : '4C'}">4C</td>
+            <td th:text="${#maps.containsKey(seatMap, '4D') ? seatMap['4D'] : '4D'}">4D</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div class="container mt-3">
+    <h2 class="yellow-text text-center">There are <span th:text="${remainingSeats}">20</span> remaining seats</h2>
+    <form th:action="@{/reserveSeat}" method="post">
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <label for="seatCode" class="form-label">Seat code</label>
+                <input type="text" class="form-control" id="seatCode" name="seatCode">
+            </div>
+            <div class="col-md-6">
+                <label for="customerName" class="form-label">Customer name</label>
+                <input type="text" class="form-control" id="customerName" name="customerName">
+            </div>
+        </div>
+        <div class="row mb-3 justify-content-center">
+            <div class="col-md-4">
+                <label for="transactionDate" class="form-label">Transaction date</label>
+                <input type="date" class="form-control" id="transactionDate" name="transactionDate">
+            </div>
+        </div>
+        <input type="hidden" id="seatId" name="seatId">
+        <button type="submit" class="btn btn-primary">Reserve</button>
+    </form>
+</div>
+<div class="container pre-scrollable black-background">
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Transaction Code</th>
+            <th>Date</th>
+            <th>Seat Number</th>
+            <th>Name</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="seat : ${seats}">
+            <td th:text="${seat.id}"></td>
+            <td th:text="${seat.transactionDate}"></td>
+            <td th:text="${seat.seatCode}"></td>
+            <td th:text="${seat.customerName}"></td>
+
+            <td>
+                <button type="button" class="btn btn-primary edit-button">Edit</button>
+            </td>
+            <td>
+                <a class="btn btn-danger" onClick="return confirm('Are you sure you want to delete the record?')" th:href="@{/delete(id=${seat.id})}">
+                    Delete
+                </a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<script src="/webjars/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
